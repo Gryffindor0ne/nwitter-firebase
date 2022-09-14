@@ -1,17 +1,19 @@
 import React, { useState } from "react";
 import {
-  getAuth,
   createUserWithEmailAndPassword,
   signInWithEmailAndPassword,
+  GoogleAuthProvider,
+  GithubAuthProvider,
+  signInWithPopup,
 } from "firebase/auth";
+
+import { authService } from "fbase";
 
 const Auth = () => {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [newAccount, setNewAccount] = useState(true);
   const [error, setError] = useState("");
-
-  const auth = getAuth();
 
   const onChange = (e) => {
     const {
@@ -26,9 +28,13 @@ const Auth = () => {
     try {
       let data;
       if (newAccount) {
-        data = await createUserWithEmailAndPassword(auth, email, password);
+        data = await createUserWithEmailAndPassword(
+          authService,
+          email,
+          password
+        );
       } else {
-        data = await signInWithEmailAndPassword(auth, email, password);
+        data = await signInWithEmailAndPassword(authService, email, password);
       }
       console.log(data);
     } catch (error) {
@@ -37,6 +43,21 @@ const Auth = () => {
   };
 
   const toggleAccount = () => setNewAccount((prev) => !prev);
+
+  const onSocialClick = async (e) => {
+    const {
+      target: { name },
+    } = e;
+
+    let provider;
+    if (name === "google") {
+      provider = new GoogleAuthProvider();
+    } else if (name === "github") {
+      provider = new GithubAuthProvider();
+    }
+    console.log(provider);
+    await signInWithPopup(authService, provider);
+  };
 
   return (
     <div>
@@ -67,8 +88,12 @@ const Auth = () => {
         {newAccount ? "Sign In" : "Create Account"}
       </span>
       <div>
-        <button>Continue with Google</button>
-        <button>Continue with Github</button>
+        <button name="google" onClick={onSocialClick}>
+          Continue with Google
+        </button>
+        <button name="github" onClick={onSocialClick}>
+          Continue with Github
+        </button>
       </div>
     </div>
   );
