@@ -1,21 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { signOut } from "firebase/auth";
+import { signOut, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 import { authService, dbService } from "fbase";
-import {
-  collection,
-  doc,
-  getDocs,
-  query,
-  where,
-  orderBy,
-} from "firebase/firestore";
+import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
 import Nweet from "components/Nweet";
 
-const Profile = ({ userObj }) => {
+const Profile = ({ userObj, refreshUser }) => {
   const [myDocs, setMyDocs] = useState([]);
+  const [newDisplayName, setNewDisplayName] = useState(userObj.displayName);
   const navigate = useNavigate();
+
   const onLogOutClick = () => {
     signOut(authService);
     navigate("/");
@@ -39,16 +34,45 @@ const Profile = ({ userObj }) => {
     getMyNweets();
   }, []);
 
+  const onChange = (event) => {
+    const {
+      target: { value },
+    } = event;
+    setNewDisplayName(value);
+  };
+
+  const onSubmit = async (event) => {
+    event.preventDefault();
+    if (userObj.displayName !== newDisplayName) {
+      await updateProfile(authService.currentUser, {
+        displayName: newDisplayName,
+      });
+    }
+    refreshUser();
+  };
+
   return (
     <>
-      {myDocs &&
-        myDocs.map((doc) => (
-          <Nweet
-            key={doc.id}
-            nweetObj={doc}
-            isOwner={doc.creatorId === userObj.uid}
-          />
-        ))}
+      <form onSubmit={onSubmit}>
+        <input
+          type="text"
+          placeholder="Display Name"
+          value={newDisplayName}
+          onChange={onChange}
+        />
+        <input type="submit" value="Update Profile" />
+      </form>
+      <section>
+        <div>{newDisplayName}'s Nweets</div>
+        {myDocs &&
+          myDocs.map((doc, idx) => (
+            <Nweet
+              key={idx}
+              nweetObj={doc}
+              isOwner={doc.creatorId === userObj.uid}
+            />
+          ))}
+      </section>
       <button onClick={onLogOutClick}>Log Out</button>
     </>
   );
