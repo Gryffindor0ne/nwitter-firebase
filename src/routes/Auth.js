@@ -26,7 +26,7 @@ const Auth = () => {
     } else if (name === "github") {
       provider = new GithubAuthProvider();
     }
-    console.log(provider);
+
     await signInWithPopup(authService, provider);
   };
 

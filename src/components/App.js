@@ -12,7 +12,6 @@ function App() {
   useEffect(() => {
     authService.onAuthStateChanged(async (user) => {
       if (user) {
-        console.log(user);
         if (user.displayName === null) {
           const name = user.email.split("@")[0];
           await updateProfile(user, {
