@@ -3,7 +3,13 @@ import { signOut, updateProfile } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
 
 import { authService, dbService } from "fbase";
-import { collection, getDocs, query, where, orderBy } from "firebase/firestore";
+import {
+  collection,
+  query,
+  where,
+  orderBy,
+  onSnapshot,
+} from "firebase/firestore";
 import Nweet from "components/Nweet";
 
 const Profile = ({ userObj, refreshUser }) => {
@@ -16,22 +22,19 @@ const Profile = ({ userObj, refreshUser }) => {
     navigate("/");
   };
 
-  const getMyNweets = async () => {
+  useEffect(() => {
     const q = query(
       collection(dbService, "nweets"),
       where("creatorId", "==", userObj.uid),
       orderBy("createdAt", "desc")
     );
-    const querySnapshot = await getDocs(q);
-    const myNweets = querySnapshot.docs.map((doc) => ({
-      // console.log(doc.id, " => ", doc.data());
-      ...doc.data(),
-    }));
-    setMyDocs(myNweets);
-  };
-
-  useEffect(() => {
-    getMyNweets();
+    onSnapshot(q, (snapshot) => {
+      const myNweets = snapshot.docs.map((doc) => ({
+        id: doc.id,
+        ...doc.data(),
+      }));
+      setMyDocs(myNweets);
+    });
   }, []);
 
   const onChange = (event) => {
@@ -52,18 +55,27 @@ const Profile = ({ userObj, refreshUser }) => {
   };
 
   return (
-    <>
-      <form onSubmit={onSubmit}>
+    <div className="container">
+      <form onSubmit={onSubmit} className="profileForm">
         <input
           type="text"
           placeholder="Display Name"
           value={newDisplayName}
+          autoFocus
           onChange={onChange}
+          className="formInput"
         />
-        <input type="submit" value="Update Profile" />
+        <input
+          type="submit"
+          value="Update Profile"
+          className="formBtn"
+          style={{
+            marginTop: 10,
+          }}
+        />
       </form>
       <section>
-        <div>{newDisplayName}'s Nweets</div>
+        <div className="profileName">{newDisplayName}'s Nweets</div>
         {myDocs &&
           myDocs.map((doc, idx) => (
             <Nweet
@@ -73,8 +85,10 @@ const Profile = ({ userObj, refreshUser }) => {
             />
           ))}
       </section>
-      <button onClick={onLogOutClick}>Log Out</button>
-    </>
+      <span className="formBtn cancelBtn logOut" onClick={onLogOutClick}>
+        Log Out
+      </span>
+    </div>
   );
 };
 export default Profile;
