@@ -12,14 +12,14 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
         maxWidth: 890,
         width: "100vw",
         margin: "0 auto",
-        marginTop: 120,
+        marginTop: 50,
         display: "flex",
         justifyContent: "center",
         alignItems: "center",
         flexDirection: "column",
       }}
     >
-      <Router>
+      <Router basename={process.env.PUBLIC_URL}>
         {isLoggedIn && <Navigation userObj={userObj} />}
         <Routes>
           {isLoggedIn ? (
@@ -36,6 +36,7 @@ const AppRouter = ({ isLoggedIn, userObj, refreshUser }) => {
             <Route path="/" element={<Auth />} />
           )}
         </Routes>
+        <footer>&copy; {new Date().getFullYear()} Nwitter</footer>
       </Router>
     </div>
   );

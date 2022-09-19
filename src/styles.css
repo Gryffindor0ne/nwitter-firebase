@@ -37,6 +37,7 @@ footer {
   display: flex;
   justify-content: center;
   margin-top: 20px;
+  margin-bottom: 20px;
 }
 
 .nweet-input::placeholder {
@@ -46,7 +47,7 @@ footer {
 
 .container {
   width: 100%;
-  max-width: 320px;
+  max-width: 330px;
   display: flex;
   flex-direction: column;
 }
