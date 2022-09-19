@@ -25,7 +25,7 @@ const Home = ({ userObj }) => {
   return (
     <div className="container">
       <NweetFactory userObj={userObj} />
-      <div style={{ marginTop: 30 }}>
+      <div style={{ marginTop: 30, width: "100%" }}>
         {nweets.map((nweet) => (
           <Nweet
             key={nweet.id}

@@ -40,6 +40,10 @@ footer {
   margin-bottom: 20px;
 }
 
+section {
+  width: 100%;
+}
+
 .nweet-input::placeholder {
   color: white;
   opacity: 0.9;
@@ -49,7 +53,13 @@ footer {
   width: 100%;
   max-width: 330px;
   display: flex;
+  justify-content: center;
+  align-items: center;
   flex-direction: column;
+}
+
+.container span {
+  margin-bottom: 20px;
 }
 
 .formInput {
@@ -75,6 +85,8 @@ footer {
 
 .cancelBtn {
   cursor: pointer;
+  width: 120px;
+  height: 30px;
   background-color: tomato;
 }
 
