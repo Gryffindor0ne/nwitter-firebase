@@ -1,0 +1,13 @@
+{
+  "files": {
+    "main.css": "/nwitter-firebase/static/css/main.76f78d57.css",
+    "main.js": "/nwitter-firebase/static/js/main.234da8dc.js",
+    "index.html": "/nwitter-firebase/index.html",
+    "main.76f78d57.css.map": "/nwitter-firebase/static/css/main.76f78d57.css.map",
+    "main.234da8dc.js.map": "/nwitter-firebase/static/js/main.234da8dc.js.map"
+  },
+  "entrypoints": [
+    "static/css/main.76f78d57.css",
+    "static/js/main.234da8dc.js"
+  ]
+}
