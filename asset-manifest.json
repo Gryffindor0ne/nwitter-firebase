@@ -1,13 +1,13 @@
 {
   "files": {
-    "main.css": "https://gryffindor0ne.github.io/nwitter-firebase/static/css/main.edfbde4d.css",
-    "main.js": "https://gryffindor0ne.github.io/nwitter-firebase/static/js/main.f1843695.js",
-    "index.html": "https://gryffindor0ne.github.io/nwitter-firebase/index.html",
-    "main.edfbde4d.css.map": "https://gryffindor0ne.github.io/nwitter-firebase/static/css/main.edfbde4d.css.map",
-    "main.f1843695.js.map": "https://gryffindor0ne.github.io/nwitter-firebase/static/js/main.f1843695.js.map"
+    "main.css": "/nwitter-firebase/static/css/main.edfbde4d.css",
+    "main.js": "/nwitter-firebase/static/js/main.9265c5a5.js",
+    "index.html": "/nwitter-firebase/index.html",
+    "main.edfbde4d.css.map": "/nwitter-firebase/static/css/main.edfbde4d.css.map",
+    "main.9265c5a5.js.map": "/nwitter-firebase/static/js/main.9265c5a5.js.map"
   },
   "entrypoints": [
     "static/css/main.edfbde4d.css",
-    "static/js/main.f1843695.js"
+    "static/js/main.9265c5a5.js"
   ]
 }
